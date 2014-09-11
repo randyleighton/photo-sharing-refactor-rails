@@ -1,14 +1,10 @@
 <h1>My Photos</h1>
 
-<% Photo.all.each do |photo| %>
-  <% if photo.user_id == @user.id %>
+<% @photos.each do |photo| %>
   <div data-toggle='modal' data-target='#myModal'>
     <%= image_tag(photo.image.url(:thumb)) %>
   </div>
-  <% end %>
 <% end %>
-
-<button><%= render '/layouts/photo_modal' %></button>
 
 
 

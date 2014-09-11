@@ -1,23 +1,14 @@
 class PhotosController < ApplicationController
-  def index
-    user_id = request.url.split("/")[4]
-    @user = User.find_by_id(user_id)
-  end
+
   def new
-    @photo = Photo.new
-    user_id = request.url.split("/")[4]
-    @user = User.find_by_id(user_id)
-    # @tag = Tag.new
+    @photo = current_user.photos.new
   end
 
   def create
-    user_id = request.url.split("/")[4]
-    @user = User.find_by_id(user_id)
-    @photo = Photo.new(photo_params)
-    # current_user.photos << @photo
-    if @photo.save
-      # session[:photo_id] = @photo.id
-      redirect_to root_path notice: "thank you for signing up!"
+    @photo = current_user.photos.new
+    if @photo.save(photo_params)
+      flash[:notice] = "Saved"
+      redirect_to user_path(current_user)
     else
       render "new"
     end
@@ -42,6 +33,6 @@ class PhotosController < ApplicationController
 
 private
   def photo_params
-    params.require(:photo).permit(:image, :user_id)
+    params.require(:photo).permit(:image)
   end
 end
