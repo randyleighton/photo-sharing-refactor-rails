@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    slkdjflskdjf
     @photos = current_user.photos
     @user = User.find(current_user)
     @users = User.all
