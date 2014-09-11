@@ -5,8 +5,9 @@ class PhotosController < ApplicationController
   end
 
   def create
-    @photo = current_user.photos.new
-    if @photo.save(photo_params)
+    @photo = Photo.new(photo_params)
+    current_user.photos << @photo
+    if @photo.save
       flash[:notice] = "Saved"
       redirect_to user_path(current_user)
     else
@@ -19,8 +20,6 @@ class PhotosController < ApplicationController
 
   def update
     @photo = Photo.find(params[:id])
-    @user = User.find(params[:user_id])
-
     # @tag = Tag.create(:user_id => @user.id, :photo_id => @photo.id)
     # if @tag.valid?
     #   flash[:notice] = "Tags were saved"
