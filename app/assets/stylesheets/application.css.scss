@@ -16,9 +16,26 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Pacifico|Courgette);
+@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
 
 .nav-format {
   float: left;
   padding-right: 30px;
   padding-top: 10px;
+}
+
+.navbar-brand {
+  font-family: 'Pacifico', cursive;
+}
+
+body {
+font-family: 'Noto Serif', serif;
+}
+
+.img-responsive-height
+{
+  display: block;
+  width: auto;
+  max-height: 100%
 }

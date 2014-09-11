@@ -2,17 +2,34 @@
 
 <% Photo.all.each do |photo| %>
   <% if photo.user_id == @user.id %>
-
   <div class="grey">
     <p><%=link_to image_tag(photo.image.url(:thumb)), new_photo_tag_path(photo) %></p>
-
-
-
   </div>
   <% end %>
 <% end %>
 
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Show Picture
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Photo</h4>
+      </div>
+      <div class="modal-body">
+        <%= link_to image_tag("http://www.britishlegion.org.uk/ImageGen.ashx?width=800&image=/media/2019101/id23055-normandy-66th_-schools-visit-poppy-choice_-pupils-from-london-city-academy.jpg", :class=>"img-responsive"), user_path(current_user) %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <p><%= link_to "Add a new photo", new_user_photo_path(current_user) %>
