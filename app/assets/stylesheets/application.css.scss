@@ -19,10 +19,34 @@
 @import url(http://fonts.googleapis.com/css?family=Pacifico|Courgette);
 @import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
 
+.welcome_images {
+
+}
+
+.feature-images {
+  margin: 10em 0em 1.3em 0em;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #c6dae6;
+  padding: 10px;
+
+}
+.feature-images-col {
+  max-width: 100%;
+  text-align: center;
+}
+
+
 .nav-format {
   float: left;
   padding-right: 30px;
   padding-top: 10px;
+}
+
+.nav_formatting {
+  background-color: #c6dae6;
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 .navbar-brand {
@@ -38,4 +62,12 @@ font-family: 'Noto Serif', serif;
   display: block;
   width: auto;
   max-height: 100%
+}
+
+.welcome_text {
+  background-color: #c6dae6;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-align: center;
+
 }
