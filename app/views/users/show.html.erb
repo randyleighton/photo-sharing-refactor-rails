@@ -2,16 +2,11 @@
 
 <% Photo.all.each do |photo| %>
   <% if photo.user_id == @user.id %>
-  <div class="grey">
-    <p><%=link_to image_tag(photo.image.url(:thumb)), new_photo_tag_path(photo) %></p>
+  <div data-toggle='modal' data-target='#myModal'>
+    <%= image_tag(photo.image.url(:thumb)) %>
   </div>
   <% end %>
 <% end %>
-
-<!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Show Picture
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
