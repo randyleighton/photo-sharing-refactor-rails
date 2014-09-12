@@ -1,21 +1,16 @@
 class TagsController < ApplicationController
-  def index
-    user_id = request.url.split("/")[4]
-    @user = User.find_by_id(user_id)
-  end
+
   def new
     @photo = Photo.find_by_id(params[:photo_id])
-    @tag = Tag.new
-    # user_id = request.url.split("/")[4]
+    @tag = Tag.new(tag_params)
     @user = User.find_by_id(current_user)
   end
 
   def create
-    @user = User.find(params[:tag][:user_id])
     @photo = Photo.find(params[:photo_id])
-    @tag = Tag.create(tag_params)
-    if @tag.valid?
-      flash[:notice] = "Tags were saved"
+    @tag = @photo.tags.new(tag_params)
+    if @tag.save
+      flash[:notice] = "Successful"
       redirect_to root_path
     else
       redirect_to user_path

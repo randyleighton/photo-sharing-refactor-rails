@@ -9,6 +9,15 @@
         <%= image_tag(nacho.image.url(:medium), :class=>"img-responsive") %>
       </div>
       <div class="modal-footer">
+        <%= form_for ([nacho, Tag.new]) do |f| %>
+          <div class='form-group'>
+            <%#= f.hidden_field :photo_id, :value => nacho.id %>
+            <%= f.collection_select :user_id, User.all, :id, :email, :class => 'form-select' %>
+            <%= f.submit(:class => "btn btn-primary") %>
+          </div>
+        <% end %>
+
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
