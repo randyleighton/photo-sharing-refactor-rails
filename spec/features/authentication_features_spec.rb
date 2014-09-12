@@ -7,7 +7,7 @@ describe "user sign in" do
     fill_in 'Password', with: 'testpassword'
     fill_in 'Password confirmation', with: 'testpassword'
     click_button 'Create User'
-    expect(page).to have_content 'Welcome user@email.com'
+    expect(page).to have_content 'Logged in as user@email.com'
   end
 
   it "will take an existing user to the log in page" do
@@ -22,7 +22,7 @@ describe "user sign in" do
     fill_in 'Email', with: 'user@email.com'
     fill_in 'Password', with: 'testpassword'
     click_button 'Log In'
-    expect(page).to have_content 'Welcome user@email.com'
+    expect(page).to have_content 'Logged in as user@email.com'
   end
 
   it "will successfully log out a user" do

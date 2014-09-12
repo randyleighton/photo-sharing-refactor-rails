@@ -918,3 +918,222 @@ Processing by UsersController#new as HTML
   Rendered users/new.html.erb within layouts/application (1.4ms)
 Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
   [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mSQL (26.8ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (44.9ms)[0m  CREATE TABLE "photos" ("id" serial primary key, "image_file_name" character varying(255), "image_content_type" character varying(255), "image_file_size" integer, "image_updated_at" timestamp) 
+  [1m[36m (2.6ms)[0m  [1mCREATE TABLE "tags" ("id" serial primary key, "photo_id" integer, "user_id" integer, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.9ms)[0m  CREATE TABLE "users" ("id" serial primary key, "email" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (0.7ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (1.3ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.7ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140911184544')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140909162218')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140909162231')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140909162244')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140909162254')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140909234255')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/signup" for 127.0.0.1 at 2014-09-12 10:55:49 -0700
+Processing by UsersController#new as HTML
+  Rendered layouts/_errors.html.erb (2.6ms)
+  Rendered users/_form.html.erb (27.4ms)
+  Rendered users/new.html.erb within layouts/application (29.6ms)
+Completed 200 OK in 2584ms (Views: 2569.1ms | ActiveRecord: 1.1ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"user@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (23.3ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-09-12 17:55:51.788795"], ["email", "user@email.com"], ["password_digest", "$2a$04$PdthjC0YOyLqIaFMz3iQiewbOSB1AzOnOmijTU2sYSVVVtZkoAZha"], ["updated_at", "2014-09-12 17:55:51.788795"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/?notice=thank+you+for+signing+up%21
+Completed 302 Found in 34ms (ActiveRecord: 23.9ms)
+Started GET "/?notice=thank+you+for+signing+up%21" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by WelcomeController#index as HTML
+  Parameters: {"notice"=>"thank you for signing up!"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+Redirected to http://www.example.com/users/1
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms)
+Started GET "/users/1" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mPhoto Load (0.3ms)[0m  [1mSELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 31ms (Views: 3.1ms | ActiveRecord: 1.5ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+Started GET "/signup" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by UsersController#new as HTML
+  Rendered layouts/_errors.html.erb (0.0ms)
+  Rendered users/_form.html.erb (1.5ms)
+  Rendered users/new.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.6ms)
+  Rendered sessions/new.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 3ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-09-12 17:55:51.861673"], ["email", "user@email.com"], ["password_digest", "$2a$04$29oWCIODRxW4j.XtzYp7EejseTh/oveo3obpq/fq0VQA0KQoQcf9K"], ["updated_at", "2014-09-12 17:55:51.861673"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.3ms)
+  Rendered sessions/new.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms)
+Started POST "/sessions" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "email"=>"user@email.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1
+Redirected to http://www.example.com/users/2
+Completed 302 Found in 4ms (ActiveRecord: 0.2ms)
+Started GET "/users/2" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mPhoto Load (0.2ms)[0m  [1mSELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/show.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 3ms (Views: 1.9ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", "2014-09-12 17:55:51.889962"], ["email", "user@email.com"], ["password_digest", "$2a$04$KlLCF5iGVKreDg.ESVKZCu1xa5nq5j75HUCu7xxjCfY7/YdUFXouq"], ["updated_at", "2014-09-12 17:55:51.889962"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.3ms)
+  Rendered sessions/new.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms)
+Started POST "/sessions" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "email"=>"user@email.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1
+Redirected to http://www.example.com/users/3
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+Started GET "/users/3" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 3]]
+  [1m[36mPhoto Load (0.2ms)[0m  [1mSELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1[0m  [["user_id", 3]]
+  Rendered users/show.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 3ms (Views: 1.5ms | ActiveRecord: 0.3ms)
+Started GET "/logout" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by SessionsController#destroy as HTML
+Redirected to http://www.example.com/
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 10:55:51 -0700
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 6ms (Views: 6.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/signup" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#new as HTML
+  Rendered layouts/_errors.html.erb (1.2ms)
+  Rendered users/_form.html.erb (11.7ms)
+  Rendered users/new.html.erb within layouts/application (13.9ms)
+Completed 200 OK in 60ms (Views: 46.4ms | ActiveRecord: 1.1ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"user@email.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-09-12 17:57:56.182875"], ["email", "user@email.com"], ["password_digest", "$2a$04$YIQdkZMRwx1of56eGQp8/.A7ReinjExNFRTh87bQ77i4pXWsnmUpC"], ["updated_at", "2014-09-12 17:57:56.182875"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/?notice=thank+you+for+signing+up%21
+Completed 302 Found in 10ms (ActiveRecord: 0.9ms)
+Started GET "/?notice=thank+you+for+signing+up%21" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by WelcomeController#index as HTML
+  Parameters: {"notice"=>"thank you for signing up!"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 4]]
+Redirected to http://www.example.com/users/4
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms)
+Started GET "/users/4" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 4]]
+  [1m[35mPhoto Load (0.3ms)[0m  SELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1  [["user_id", 4]]
+  Rendered users/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 17ms (Views: 3.1ms | ActiveRecord: 1.6ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/signup" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#new as HTML
+  Rendered layouts/_errors.html.erb (0.0ms)
+  Rendered users/_form.html.erb (1.4ms)
+  Rendered users/new.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.6ms)
+  Rendered sessions/new.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-09-12 17:57:56.233777"], ["email", "user@email.com"], ["password_digest", "$2a$04$Hx4UtawMGjP0gwCpwa.YvOdfP857gNthRpVKepOcc4MMYt7d6uaim"], ["updated_at", "2014-09-12 17:57:56.233777"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.3ms)
+  Rendered sessions/new.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms)
+Started POST "/sessions" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "email"=>"user@email.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1[0m
+Redirected to http://www.example.com/users/5
+Completed 302 Found in 4ms (ActiveRecord: 0.2ms)
+Started GET "/users/5" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 5]]
+  [1m[35mPhoto Load (0.2ms)[0m  SELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1  [["user_id", 5]]
+  Rendered users/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 3ms (Views: 1.7ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", "2014-09-12 17:57:56.256908"], ["email", "user@email.com"], ["password_digest", "$2a$04$/CEv1Nl8JVG4ZaSZcZ9HeOIyy08mv2MgTt8wX/7CB8uFC9kL2py.W"], ["updated_at", "2014-09-12 17:57:56.256908"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/login" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#new as HTML
+  Rendered sessions/_form.html.erb (0.3ms)
+  Rendered sessions/new.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms)
+Started POST "/sessions" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "email"=>"user@email.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'user@email.com' LIMIT 1[0m
+Redirected to http://www.example.com/users/6
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+Started GET "/users/6" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1  [["id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 6]]
+  [1m[35mPhoto Load (0.2ms)[0m  SELECT "photos".* FROM "photos" INNER JOIN "tags" ON "photos"."id" = "tags"."photo_id" WHERE "tags"."user_id" = $1  [["user_id", 6]]
+  Rendered users/show.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 3ms (Views: 1.6ms | ActiveRecord: 0.3ms)
+Started GET "/logout" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by SessionsController#destroy as HTML
+Redirected to http://www.example.com/
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 10:57:56 -0700
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 4ms (Views: 4.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
