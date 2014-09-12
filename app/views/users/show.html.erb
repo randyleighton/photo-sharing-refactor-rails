@@ -1,4 +1,4 @@
-<div class='col-xs-5 photo-col1'>
+<div class='col-xs-12 photo-col1'>
   <div>
     <p>Photos for <%= current_user.email %></p>
     <%= link_to "Add a new photo", new_user_photo_path(current_user) %>
@@ -13,11 +13,3 @@
   </div>
 </div>
 
-<div class='col-xs-1'></div>
-
-<div class='col-xs-6 photo-col1'>
-  <h3>Tagged photos for <%= current_user.email %></h3>
-  <div class="feature-images-col">
-    <%= image_tag('puma.jpg', :class => 'welcome_images img-thumbnail') %>
-  </div>
-</div>
